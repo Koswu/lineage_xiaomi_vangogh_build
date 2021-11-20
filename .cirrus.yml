@@ -10,6 +10,7 @@ task:
         cpu: 8
         memory: 16G
     sync_script:
+      - echo "clone lineage source code"
       - sh sync.sh
     copy_manifests:
       - mkdir /tmp/rom
