@@ -1,6 +1,7 @@
 env: # Environment variables to pass to all tasks
     CIRRUS_CLONE_DEPTH: 1 # No need to clone with the whole history
     CIRRUS_WORKING_DIR: "/tmp/ci" # Where to clone the aosp-builder repo
+    RCLONE_CONFIG: ENCRYPTED[40b7d81aacdf1e8c91dd55077f16d75405099ff4c02ae05ae3b3a75aef469f7e2a9293284d5c45a64bdafdb12e4f8325]
 
 task:
     name: lineage
@@ -10,10 +11,20 @@ task:
         cpu: 4
         memory: 16G
         greedy: true
-    sync_script:
-      #- sh install_repo.sh
-      - echo "clone lineage source code"
-      - sh sync.sh
-    copy_manifests:
-      - mkdir /tmp/rom
-      - cp local_manifests /tmp/rom/.repo
+    build_process:
+      init_repo:
+        - mkdir /tmp/rom && cd /tmp/rom
+        - echo "clone lineage source code"
+        - repo init --depth=1 -u git://github.com/LineageOS/android.git -b lineage-18.1
+      copy_manifests:
+        - cp -r local_manifests /tmp/rom/.repo/
+      setup_rclone:
+        - echo $RCLONE_CONFIG > ~/.config/rclone/rclone.conf
+      sync_repo:
+        - repo sync -c
+      build:
+        - source build/envsetup.sh
+        - lunch lineage lineage_vangogh-user
+        - mka bacon
+      upload:
+        - "rclone copy ./out/target/product/*/lineage-* onedrive:"
