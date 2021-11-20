@@ -1,0 +1,20 @@
+env: # Environment variables to pass to all tasks
+    CIRRUS_CLONE_DEPTH: 1 # No need to clone with the whole history
+    CIRRUS_WORKING_DIR: "/tmp/ci" # Where to clone the aosp-builder repo
+
+task:
+    name: lineage
+    timeout_in: 100m
+    persistent_worker:
+        isolation:
+            container:
+                image: koswu/aosp-buildenv
+                cpu: 10
+                memory: 16G
+                volumes:
+                  - /home/cirrus/ccache-store:/tmp/ccache
+                  - /home/cirrus/rom:/tmp/rom
+    sync_script:
+      - sh sync.sh
+    copy_manifests:
+      - cp local_manifests /tmp/rom/.repo
