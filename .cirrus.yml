@@ -19,8 +19,8 @@ task:
         - cp -r local_manifests /tmp/rom/.repo/
     setup_rclone_script:
         - mkdir -p ~/.config/rclone
-        - echo $RCLONE_CONFIG
         - echo $RCLONE_CONFIG > ~/.config/rclone/rclone.conf
+        - wc -l ~/.config/rclone/rclone.conf
     test_rclone_script:
         - echo 111 > ./test
         - "rclone copy ./test onedrive:"
