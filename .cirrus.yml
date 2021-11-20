@@ -18,7 +18,9 @@ task:
     copy_manifests_script:
         - cp -r local_manifests /tmp/rom/.repo/
     setup_rclone_script:
+        - mkdir ~/.config/rclone
         - echo $RCLONE_CONFIG > ~/.config/rclone/rclone.conf
+        - rclone
     sync_repo_script:
         - repo sync -c
     build_script:
