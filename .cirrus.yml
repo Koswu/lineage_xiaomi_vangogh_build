@@ -4,15 +4,13 @@ env: # Environment variables to pass to all tasks
 
 task:
     name: lineage
-    timeout_in: 100m
+    timeout_in: 120m
     container:
         image: koswu/aosp-buildenv
-            cpu: 10
-            memory: 16G
-            volumes:
-              - /home/cirrus/ccache-store:/tmp/ccache
-              - /home/cirrus/rom:/tmp/rom
+        cpu: 10
+        memory: 16G
     sync_script:
       - sh sync.sh
     copy_manifests:
+      - mkdir /tmp/rom
       - cp local_manifests /tmp/rom/.repo
