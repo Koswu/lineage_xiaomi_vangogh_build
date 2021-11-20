@@ -12,6 +12,7 @@ task:
         greedy: true
     sync_script:
       - echo "clone lineage source code"
+      - git -v
       - sh sync.sh
     copy_manifests:
       - mkdir /tmp/rom
