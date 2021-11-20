@@ -8,7 +8,7 @@ task:
     timeout_in: 120m
     container:
         image: koswu/aosp-buildenv
-        cpu: 4
+        cpu: 8
         memory: 16G
         greedy: true
     init_repo_script:
