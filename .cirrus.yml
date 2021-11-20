@@ -29,7 +29,7 @@ task:
     build_script:
         - cd /tmp/rom
         - source build/envsetup.sh
-        - lunch lineage lineage_vangogh-user
+        - lunch lineage_vangogh-user
         - mka bacon
     upload_script:
         - "rclone copy /tmp/rom/out/target/product/*/lineage-* onedrive:"
