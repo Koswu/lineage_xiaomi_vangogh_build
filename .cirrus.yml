@@ -11,20 +11,19 @@ task:
         cpu: 4
         memory: 16G
         greedy: true
-    build_process:
-      init_repo:
+    init_repo_script:
         - mkdir /tmp/rom && cd /tmp/rom
         - echo "clone lineage source code"
         - repo init --depth=1 -u git://github.com/LineageOS/android.git -b lineage-18.1
-      copy_manifests:
+    copy_manifests_script:
         - cp -r local_manifests /tmp/rom/.repo/
-      setup_rclone:
+    setup_rclone_script:
         - echo $RCLONE_CONFIG > ~/.config/rclone/rclone.conf
-      sync_repo:
+    sync_repo_script:
         - repo sync -c
-      build:
+    build_script:
         - source build/envsetup.sh
         - lunch lineage lineage_vangogh-user
         - mka bacon
-      upload:
+    upload_script:
         - "rclone copy ./out/target/product/*/lineage-* onedrive:"
