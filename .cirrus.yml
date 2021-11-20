@@ -20,7 +20,9 @@ task:
     setup_rclone_script:
         - mkdir -p ~/.config/rclone
         - echo $RCLONE_CONFIG > ~/.config/rclone/rclone.conf
-        - rclone
+    test_rclone_script:
+        - echo 111 > ./test
+        - "rclone copy ./test onedrive:"
     sync_repo_script:
         - repo sync -c
     build_script:
