@@ -11,7 +11,7 @@ task:
         memory: 16G
         greedy: true
     sync_script:
-      - sh install_repo.sh
+      #- sh install_repo.sh
       - echo "clone lineage source code"
       - mkdir -p /tmp/rom && cd /tmp/rom
       - repo init --depth=1 -u git://github.com/LineageOS/android.git -b lineage-18.1 
