@@ -1,7 +1,7 @@
 env: # Environment variables to pass to all tasks
     CIRRUS_CLONE_DEPTH: 1 # No need to clone with the whole history
     CIRRUS_WORKING_DIR: "/tmp/ci" # Where to clone the aosp-builder repo
-    RCLONE_CONFIG: ENCRYPTED[40b7d81aacdf1e8c91dd55077f16d75405099ff4c02ae05ae3b3a75aef469f7e2a9293284d5c45a64bdafdb12e4f8325]
+    RCLONE_CONFIG_CONTENT: ENCRYPTED[2fe67cc504357d93ca53a899c03f62c577f0b08fe60751e1397a5ca8b504bf5b823c5ee26e9fa292a430cc41e89e6af2]
 
 task:
     name: lineage
@@ -19,16 +19,17 @@ task:
         - cp -r local_manifests /tmp/rom/.repo/
     setup_rclone_script:
         - mkdir -p ~/.config/rclone
-        - echo $RCLONE_CONFIG > ~/.config/rclone/rclone.conf
-        - wc -l ~/.config/rclone/rclone.conf
+        - echo -e $RCLONE_CONFIG_CONTENT > ~/.config/rclone/rclone.conf
     test_rclone_script:
-        - echo 111 > ./test
-        - "rclone copy ./test onedrive:"
+        - echo 111 > /tmp/test
+        - "rclone copy /tmp/test onedrive:"
     sync_repo_script:
+        - cd /tmp/rom
         - repo sync -c
     build_script:
+        - cd /tmp/rom
         - source build/envsetup.sh
         - lunch lineage lineage_vangogh-user
         - mka bacon
     upload_script:
-        - "rclone copy ./out/target/product/*/lineage-* onedrive:"
+        - "rclone copy /tmp/rom/out/target/product/*/lineage-* onedrive:"
