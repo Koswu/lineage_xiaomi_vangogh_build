@@ -12,8 +12,9 @@ task:
         greedy: true
     sync_script:
       - echo "clone lineage source code"
-      - git -v
-      - sh sync.sh
+      - mkdir -p /tmp/rom && cd /tmp/rom
+      - repo init --depth=1 -u git://github.com/LineageOS/android.git -b lineage-18.1 
+      - repo sync -c --force-sync
     copy_manifests:
       - mkdir /tmp/rom
       - cp local_manifests /tmp/rom/.repo
