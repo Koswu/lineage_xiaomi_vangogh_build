@@ -2,6 +2,7 @@ env: # Environment variables to pass to all tasks
     CIRRUS_CLONE_DEPTH: 1 # No need to clone with the whole history
     CIRRUS_WORKING_DIR: "/tmp/ci" # Where to clone the aosp-builder repo
     RCLONE_CONFIG_CONTENT: ENCRYPTED[2fe67cc504357d93ca53a899c03f62c577f0b08fe60751e1397a5ca8b504bf5b823c5ee26e9fa292a430cc41e89e6af2]
+    USE_CCACHE: 1
 
 task:
     name: lineage
@@ -20,9 +21,8 @@ task:
     setup_rclone_script:
         - mkdir -p ~/.config/rclone
         - echo -e $RCLONE_CONFIG_CONTENT > ~/.config/rclone/rclone.conf
-    test_rclone_script:
-        - echo 111 > /tmp/test
-        - "rclone copy /tmp/test onedrive:"
+    fetch_ccache_script:
+        - rclone lsf onedrive:/aosp/ccache.tar.gz && echo "cache found, fetching" && rclone -P copy onedrive:/aosp/ccache.tar.gz /tmp/ccache.tar.gz && tar xzvf /tmp/ccache.tar.gz /cache/
     sync_repo_script:
         - cd /tmp/rom
         - repo sync -c
