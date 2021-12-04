@@ -10,7 +10,7 @@ pipeline {
     stage('fetch') {
       steps {
         sh 'cp -r local_manifests /code/.repo/ && cd /code && repo init --depth=1 -u https://mirrors.tuna.tsinghua.edu.cn/git/lineageOS/LineageOS/android.git -b lineage-18.1'
-        sh 'cd /code && repo sync -c --force'
+        sh 'cd /code && repo sync -c --force-sync'
       }
     }
 
