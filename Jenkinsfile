@@ -23,7 +23,7 @@ pipeline {
       }
     }
 
-    stage('') {
+    stage('archive') {
       steps {
         archiveArtifacts(onlyIfSuccessful: true, fingerprint: true, artifacts: '/code/out/target/target/product/*/lineage-*-UNOFFICIAL*.zip')
       }
