@@ -25,7 +25,7 @@ pipeline {
 
     stage('archive') {
       steps {
-        archiveArtifacts(onlyIfSuccessful: true, fingerprint: true, artifacts: '/code/out/target/target/product/*/lineage-*-UNOFFICIAL*.zip')
+        archiveArtifacts(onlyIfSuccessful: true, fingerprint: true, artifacts: '/code/out/target/product/*/lineage-*-UNOFFICIAL*.zip')
       }
     }
 
