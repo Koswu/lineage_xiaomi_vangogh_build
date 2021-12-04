@@ -16,7 +16,7 @@ pipeline {
           }
         }
 
-        stage('') {
+        stage('error') {
           steps {
             sh 'echo $http_proxy'
           }
@@ -27,7 +27,7 @@ pipeline {
 
     stage('build') {
       steps {
-        sh 'cd /code && . build/envsetup.sh;lunch lineage_vangogh-user && mka bacon'
+        sh 'bash -c\'cd /code && . build/envsetup.sh;lunch lineage_vangogh-user && mka bacon\''
       }
     }
 
