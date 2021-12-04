@@ -10,13 +10,13 @@ pipeline {
     stage('fetch') {
       steps {
         sh 'cp -r local_manifests /code/.repo/ && cd /code && repo init --depth=1 -u git://github.com/LineageOS/android.git -b lineage-18.1'
-        sh 'cd /code && repo sync -c -f --force-sync'
+        sh 'cd /code && repo sync -c --force-sync'
       }
     }
 
     stage('build') {
       steps {
-        sh 'cd /code && source build/envsetup.sh;lunch lineage_vangogh-user && mka bacon'
+        sh 'cd /code && . build/envsetup.sh;lunch lineage_vangogh-user && mka bacon'
       }
     }
 
