@@ -9,8 +9,7 @@ pipeline {
   stages {
     stage('fetch') {
       steps {
-        sh 'pwd && ls'
-        sh 'ls /code && ls /code && touch /code/test'
+        sh 'cd /code && repo init --depth=1 -u https://mirrors.tuna.tsinghua.edu.cn/git/lineageOS/LineageOS/android.git -b lineage-18.1'
       }
     }
 
