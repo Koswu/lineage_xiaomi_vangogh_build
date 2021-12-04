@@ -10,16 +10,13 @@ pipeline {
     stage('fetch') {
       steps {
         sh 'cp -r local_manifests /code/.repo/ && cd /code && repo init --depth=1 -u https://mirrors.tuna.tsinghua.edu.cn/git/lineageOS/LineageOS/android.git -b lineage-18.1'
-        sh 'repo sync -c --force'
+        sh 'cd /code && repo sync -c --force'
       }
     }
 
     stage('build') {
       steps {
-        sh 'cd /code'
-        sh 'source build/envsetup.sh'
-        sh 'lunch lineage_vangogh-user'
-        sh 'mka bacon'
+        sh 'cd /code && source build/envsetup.sh;lunch lineage_vangogh-user && mka bacon'
       }
     }
 
