@@ -19,7 +19,7 @@ pipeline {
         USE_CCACHE = '1'
       }
       steps {
-        sh 'bash -c "cd /code && . build/envsetup.sh;lunch lineage_vangogh-user && mka bacon"'
+        sh 'bash -c "cd /code && . build/envsetup.sh;lunch lineage_vangogh-user && mka clean && mka bacon"'
       }
     }
 
