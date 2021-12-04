@@ -8,26 +8,24 @@ pipeline {
   }
   stages {
     stage('fetch') {
-      parallel {
-        stage('fetch') {
-          steps {
-            sh 'cp -r local_manifests /code/.repo/ && cd /code && repo init --depth=1 -u git://github.com/LineageOS/android.git -b lineage-18.1'
-            sh 'cd /code && repo sync -j 10 -c --force-sync'
-          }
-        }
-
-        stage('error') {
-          steps {
-            sh 'echo $http_proxy'
-          }
-        }
-
+      steps {
+        sh 'cp -r local_manifests /code/.repo/ && cd /code && repo init --depth=1 -u git://github.com/LineageOS/android.git -b lineage-18.1'
+        sh 'cd /code && repo sync -j 10 -c --force-sync'
       }
     }
 
     stage('build') {
+      environment {
+        USE_CCACHE = '1'
+      }
       steps {
         sh 'bash -c "cd /code && . build/envsetup.sh;lunch lineage_vangogh-user && mka bacon"'
+      }
+    }
+
+    stage('') {
+      steps {
+        archiveArtifacts(onlyIfSuccessful: true, fingerprint: true, artifacts: '/code/out/target/target/product/*/lineage-*-UNOFFICIAL*.zip')
       }
     }
 
