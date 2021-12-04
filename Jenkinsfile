@@ -14,4 +14,8 @@ pipeline {
     }
 
   }
+  environment {
+    http_proxy = 'http://192.168.0.105:3128'
+    https_proxy = 'http://192.168.0.105:3128'
+  }
 }
