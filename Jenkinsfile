@@ -8,19 +8,9 @@ pipeline {
   }
   stages {
     stage('fetch') {
-      parallel {
-        stage('fetch') {
-          steps {
-            sh 'cp -r local_manifests /code/.repo/ && cd /code && repo init --depth=1 -u https://mirrors.tuna.tsinghua.edu.cn/git/lineageOS/LineageOS/android.git -b lineage-18.1'
-          }
-        }
-
-        stage('') {
-          steps {
-            sh 'repo sync -c --force'
-          }
-        }
-
+      steps {
+        sh 'cp -r local_manifests /code/.repo/ && cd /code && repo init --depth=1 -u https://mirrors.tuna.tsinghua.edu.cn/git/lineageOS/LineageOS/android.git -b lineage-18.1'
+        sh 'repo sync -c --force'
       }
     }
 
