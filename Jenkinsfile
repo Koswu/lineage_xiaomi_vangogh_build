@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('fetch') {
       steps {
-        git 'git@github.com:Koswu/lineage_xiaomi_vangogh_build.git'
+        git 'https://github.com/Koswu/lineage_xiaomi_vangogh_build.git'
       }
     }
 
