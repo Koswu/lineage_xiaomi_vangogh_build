@@ -6,11 +6,6 @@ pipeline {
     }
 
   }
-  options {
-    buildDiscarder(logRotator(numToKeepStr: "3"))
-    disableConcurrentBuilds()
-    retry(3)
-  }
   stages {
     stage('fetch') {
       steps {
@@ -27,7 +22,7 @@ pipeline {
         USE_CCACHE = '1'
       }
       steps {
-        sh 'bash -c "cd /code && . build/envsetup.sh;lunch lineage_vangogh-user  && mka bacon"'
+        sh 'bash -c "cd /code && . build/envsetup.sh;lunch lineage_vangogh-user && rm /code/out/target/product/*/*.zip  && mka bacon"'
       }
     }
 
@@ -43,5 +38,10 @@ pipeline {
   environment {
     http_proxy = 'http://192.168.0.105:3128'
     https_proxy = 'http://192.168.0.105:3128'
+  }
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '3'))
+    disableConcurrentBuilds()
+    retry(3)
   }
 }
