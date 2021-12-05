@@ -6,6 +6,11 @@ pipeline {
     }
 
   }
+  options {
+    buildDiscarder(logRotator(numToKeepStr: "3"))
+    disableConcurrentBuilds()
+    retry(3)
+  }
   stages {
     stage('fetch') {
       steps {
