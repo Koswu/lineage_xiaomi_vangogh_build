@@ -10,7 +10,10 @@ pipeline {
     stage('fetch') {
       steps {
         sh 'cp -r local_manifests /code/.repo/ && cd /code && repo init --depth=1 -u git://github.com/LineageOS/android.git -b lineage-18.1'
-        sh 'cd /code && repo sync -j 10 -c --force-sync'
+        retry(count: 3) {
+          sh 'cd /code && repo sync -j 10 -c --force-sync'
+        }
+
       }
     }
 
@@ -25,7 +28,8 @@ pipeline {
 
     stage('archive') {
       steps {
-        archiveArtifacts(onlyIfSuccessful: true, fingerprint: true, artifacts: '/code/out/target/product/*/lineage-*-UNOFFICIAL*.zip')
+        sh 'mkdir -p /tmp/build_result && cp /code/out/target/product/*/lineage-*-UNOFFICIAL-*.zip /tmp/build_result'
+        archiveArtifacts(artifacts: '/tmp/build_result/*', fingerprint: true)
       }
     }
 
