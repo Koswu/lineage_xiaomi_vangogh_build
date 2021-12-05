@@ -28,7 +28,7 @@ pipeline {
 
     stage('archive') {
       steps {
-        sh 'mkdir -p /tmp/build_result && cp /code/out/target/product/*/lineage-*-UNOFFICIAL-*.zip /tmp/build_result'
+        sh 'mkdir -p /tmp/build_result && cp /code/out/target/product/*/lineage-*-UNOFFICIAL-*.zip /tmp/build_result/'
         archiveArtifacts(artifacts: '/tmp/build_result/*.zip', fingerprint: true)
       }
     }
