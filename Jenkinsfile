@@ -14,7 +14,7 @@ pipeline {
           sh 'cd /code && repo sync -j 10 -c --force-sync'
         }
 
-        sh 'echo $BUILD_KEY_FILE && cp $BUILD_KEY_FILE /tmp/key.tar.gz && cd /tmp && tar xzvf key.tar.gz  '
+        sh 'cp $BUILD_KEY_FILE /tmp/key.tar.gz && cd /tmp && tar xzvf key.tar.gz  '
         sh 'mkdir -p $WORKSPACE/build_result'
       }
     }
