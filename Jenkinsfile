@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('fetch') {
       parallel {
-        stage('fetch') {
+        stage('fetch source code') {
           steps {
             sh 'cp -r local_manifests /code/.repo/ && cd /code && repo init --depth=1 -u git://github.com/LineageOS/android.git -b lineage-18.1'
             retry(count: 3) {
@@ -21,7 +21,7 @@ pipeline {
 
         stage('fetch build key') {
           steps {
-            sh 'echo $BUILD_KEY_FILE && cp $BUILD_KEY_FILE /tmp; ls /tmp'
+            sh 'echo $BUILD_KEY_FILE && cp $BUILD_KEY_FILE /tmp/key.tar.gz && cd /tmp && tar xzvf key.tar.gz  '
           }
         }
 
@@ -42,6 +42,14 @@ pipeline {
         sh 'mkdir -p $WORKSPACE/build_result && cp /code/out/target/product/*/lineage-*-UNOFFICIAL-*.zip $WORKSPACE/build_result/'
         sh 'ls $WORKSPACE/build_result'
         archiveArtifacts(artifacts: 'build_result/*', fingerprint: true)
+      }
+    }
+
+    stage('sign') {
+      steps {
+        sh 'croot && sign_target_files_apks -o -d /tmp/android-certs $OUT/obj/PACKAGING/target_files_intermediates/*-target_files-*.zip /tmp/signed-target_files.zip'
+        sh '''ota_from_target_files -k /tmp/android-certs/releasekey --block --backup=true /tmp/signed-target_files.zip 
+$WORKSPACE/signed-ota_update.zip'''
       }
     }
 
