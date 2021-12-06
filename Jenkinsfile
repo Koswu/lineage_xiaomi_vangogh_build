@@ -21,8 +21,7 @@ pipeline {
 
         stage('fetch build key') {
           steps {
-            sh '''echo $BUILD_KEY_FILE && cp $BUILD_KEY_FILE /tmp
-&& ls /tmp'''
+            sh 'echo $BUILD_KEY_FILE && cp $BUILD_KEY_FILE /tmp; ls /tmp'
           }
         }
 
