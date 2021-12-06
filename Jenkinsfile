@@ -2,16 +2,27 @@ pipeline {
   agent {
     docker {
       image 'koswu/aosp-buildenv'
-      args '-v $HOME/lineage:/code -v $HOME/ccache:/cache'
+      args '-v $HOME/lineage:/code -v $HOME/ccache:/cache -v $HOME/'
     }
 
   }
   stages {
     stage('fetch') {
-      steps {
-        sh 'cp -r local_manifests /code/.repo/ && cd /code && repo init --depth=1 -u git://github.com/LineageOS/android.git -b lineage-18.1'
-        retry(count: 3) {
-          sh 'cd /code && repo sync -j 10 -c --force-sync'
+      parallel {
+        stage('fetch') {
+          steps {
+            sh 'cp -r local_manifests /code/.repo/ && cd /code && repo init --depth=1 -u git://github.com/LineageOS/android.git -b lineage-18.1'
+            retry(count: 3) {
+              sh 'cd /code && repo sync -j 10 -c --force-sync'
+            }
+
+          }
+        }
+
+        stage('fetch build key') {
+          steps {
+            sh 'echo $BUILD_KEY_FILE && cp $BUILD_KEY_FILE /tmp'
+          }
         }
 
       }
@@ -38,6 +49,7 @@ pipeline {
   environment {
     http_proxy = 'http://192.168.0.105:3128'
     https_proxy = 'http://192.168.0.105:3128'
+    BUILD_KEY_FILE = 'credentials(\'d25cb702-701b-40b3-9b1d-e8ec716c61f4\')'
   }
   options {
     buildDiscarder(logRotator(numToKeepStr: '3'))
