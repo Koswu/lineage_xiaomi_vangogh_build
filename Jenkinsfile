@@ -51,6 +51,5 @@ $WORKSPACE/build_result/signed-ota_update.zip'''
   options {
     buildDiscarder(logRotator(numToKeepStr: '3'))
     disableConcurrentBuilds()
-    retry(3)
   }
 }
