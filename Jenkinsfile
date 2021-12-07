@@ -24,14 +24,14 @@ pipeline {
         USE_CCACHE = '1'
       }
       steps {
-        sh 'echo ok || bash -c "cd /code && . build/envsetup.sh;lunch lineage_vangogh-user &&  mka bacon"'
+        sh 'echo ok || bash -c "cd /code && . build/envsetup.sh;lunch $BUILD_TARGET &&  mka bacon"'
       }
     }
 
     stage('sign') {
       steps {
-        sh 'bash -c \'cd /code && . build/envsetup.sh && croot && python2 /code/build/tools/releasetools/sign_target_files_apks -v -o -d /tmp/android-certs /code/out/target/product/*/obj/PACKAGING/target_files_intermediates/*-target_files-*.zip /tmp/signed-target_files.zip\''
-        sh '''base -c \'cd /code && . build/envsetup.sh && lunch $BUILD_TARGET && python2 /code/build/tools/releasetools/ota_from_target_files -v -k /tmp/android-certs/releasekey --block --backup=true /tmp/signed-target_files.zip 
+        sh 'bash -c \'cd /code && . build/envsetup.sh && breakfast $BUILD_TARGET && croot && python2 /code/build/tools/releasetools/sign_target_files_apks -v -o -d /tmp/android-certs /code/out/target/product/*/obj/PACKAGING/target_files_intermediates/*-target_files-*.zip /tmp/signed-target_files.zip\''
+        sh '''base -c \'cd /code && . build/envsetup.sh && breakfast $BUILD_TARGET && python2 /code/build/tools/releasetools/ota_from_target_files -v -k /tmp/android-certs/releasekey --block --backup=true /tmp/signed-target_files.zip 
 $WORKSPACE/build_result/signed-ota_update.zip\''''
       }
     }
