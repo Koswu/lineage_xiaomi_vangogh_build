@@ -49,7 +49,7 @@ $WORKSPACE/build_result/signed-ota_update.zip\''''
     BUILD_KEY_FILE = credentials('d25cb702-701b-40b3-9b1d-e8ec716c61f4')
   }
   options {
-    buildDiscarder(logRotator(numToKeepStr: '3'))
+    buildDiscarder(logRotator(numToKeepStr: '5'))
     disableConcurrentBuilds()
   }
 }
