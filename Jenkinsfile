@@ -31,7 +31,7 @@ pipeline {
     stage('sign') {
       steps {
         sh 'bash -c \'cd /code && . build/envsetup.sh && croot && /code/build/tools/releasetools/sign_target_files_apks -o -d /tmp/android-certs /code/out/obj/PACKAGING/target_files_intermediates/*-target_files-*.zip /tmp/signed-target_files.zip\''
-        sh '''base -c \'cd /code && . build/envsetup.sh && /code/build/tools/releasetools/ota_from_target_files -k /tmp/android-certs/releasekey --block --backup=true /tmp/signed-target_files.zip 
+        sh '''base -c \'cd /code && . build/envsetup.sh && lunch lineage_vangogh-user && /code/build/tools/releasetools/ota_from_target_files -k /tmp/android-certs/releasekey --block --backup=true /tmp/signed-target_files.zip 
 $WORKSPACE/build_result/signed-ota_update.zip\''''
       }
     }
@@ -47,6 +47,7 @@ $WORKSPACE/build_result/signed-ota_update.zip\''''
     http_proxy = 'http://192.168.0.105:3128'
     https_proxy = 'http://192.168.0.105:3128'
     BUILD_KEY_FILE = credentials('d25cb702-701b-40b3-9b1d-e8ec716c61f4')
+    BUILD_TARGET = 'lineage_vangogh-user'
   }
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
