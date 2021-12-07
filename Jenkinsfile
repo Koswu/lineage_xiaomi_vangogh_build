@@ -30,9 +30,9 @@ pipeline {
 
     stage('sign') {
       steps {
-        sh 'croot && sign_target_files_apks -o -d /tmp/android-certs $OUT/obj/PACKAGING/target_files_intermediates/*-target_files-*.zip /tmp/signed-target_files.zip'
-        sh '''ota_from_target_files -k /tmp/android-certs/releasekey --block --backup=true /tmp/signed-target_files.zip 
-$WORKSPACE/build_result/signed-ota_update.zip'''
+        sh 'bash -c \'cd /code && . build/envsetup.sh && croot && sign_target_files_apks -o -d /tmp/android-certs $OUT/obj/PACKAGING/target_files_intermediates/*-target_files-*.zip /tmp/signed-target_files.zip\''
+        sh '''base -c \'cd /code && . build/envsetup.sh && ota_from_target_files -k /tmp/android-certs/releasekey --block --backup=true /tmp/signed-target_files.zip 
+$WORKSPACE/build_result/signed-ota_update.zip\''''
       }
     }
 
