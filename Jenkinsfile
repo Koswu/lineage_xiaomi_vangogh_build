@@ -11,7 +11,7 @@ pipeline {
       steps {
         sh 'cp -r local_manifests /code/.repo/ && cd /code && repo init --depth=1 -u git://github.com/LineageOS/android.git -b lineage-18.1'
         retry(count: 3) {
-          sh 'cd /code && repo sync -j 10 -c --force-sync'
+          sh 'cd /code && repo sync -j 12 -c --force-sync'
         }
 
         sh 'cp $BUILD_KEY_FILE /tmp/key.tar.gz && cd /tmp && tar xzvf key.tar.gz  '
