@@ -25,7 +25,7 @@ pipeline {
       }
       steps {
         sh 'echo ok || bash -c "cd /code && . build/envsetup.sh;lunch lineage_vangogh-user &&  mka bacon"'
-        sh 'bash -c "cd /code && . build/envsetup.sh;lunch lineage_vangogh-user &&  mka otatools"'
+        sh 'bash -c "cd /code && . build/envsetup.sh;lunch lineage_vangogh-user &&  mka target-files-package otatools"'
       }
     }
 
