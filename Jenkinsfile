@@ -31,7 +31,7 @@ pipeline {
     stage('sign') {
       steps {
         sh 'bash -c \'cd /code && . build/envsetup.sh && croot && /code/build/tools/releasetools/sign_target_files_apks -o -d /tmp/android-certs /code/out/target/product/*/obj/PACKAGING/target_files_intermediates/*-target_files-*.zip /tmp/signed-target_files.zip\''
-        sh '''base -c \'cd /code && . build/envsetup.sh && lunch $BUILD_TARGET && $OUT/build/tools/releasetools/ota_from_target_files -k /tmp/android-certs/releasekey --block --backup=true /tmp/signed-target_files.zip 
+        sh '''base -c \'cd /code && . build/envsetup.sh && lunch $BUILD_TARGET && /code/build/tools/releasetools/ota_from_target_files -k /tmp/android-certs/releasekey --block --backup=true /tmp/signed-target_files.zip 
 $WORKSPACE/build_result/signed-ota_update.zip\''''
       }
     }
