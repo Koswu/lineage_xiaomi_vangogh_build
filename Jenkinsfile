@@ -54,6 +54,18 @@ pipeline {
       }
     }
 
+    stage('trim') {
+      agent {
+        node {
+          label 'compile_server'
+        }
+
+      }
+      steps {
+        sh '/usr/sbin/fstrim -a -v'
+      }
+    }
+
   }
   environment {
     http_proxy = 'http://192.168.0.105:3128'
