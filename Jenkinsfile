@@ -27,7 +27,7 @@ pipeline {
         USE_CCACHE = '1'
       }
       steps {
-        lock(resource: 'lineage-source') {
+        lock(resource: 'lineage-source', quantity: 1) {
           sh 'bash -c \'cd /code && . build/envsetup.sh;breakfast $BUILD_TARGET &&  mka target-files-package otatools\''
         }
 
