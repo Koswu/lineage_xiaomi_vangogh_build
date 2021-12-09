@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('fetch') {
       steps {
-        lock(resource: 'lineage-source', skipIfLocked: true) {
+        lock(resource: 'lineage-source') {
           retry(count: 3) {
             sh 'cp -r local_manifests /code/.repo/ && cd /code && repo init --depth=1 -u git://github.com/LineageOS/android.git -b lineage-18.1'
             sh 'cd /code && repo sync -j 12 -c --force-sync'
