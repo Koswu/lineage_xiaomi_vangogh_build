@@ -15,6 +15,7 @@ pipeline {
 
       }
       steps {
+        sh 'ls /root'
         sh 'rm -rf /root/lineage/out/*'
         sh '/usr/sbin/fstrim -a -v'
       }
