@@ -19,6 +19,7 @@ pipeline {
         sh '/usr/sbin/fstrim -a -v'
       }
     }
+
     stage('fetch') {
       steps {
         lock(resource: 'lineage-source') {
@@ -65,7 +66,7 @@ pipeline {
         archiveArtifacts(artifacts: 'build_result/*', fingerprint: true)
       }
     }
-    
+
   }
   environment {
     http_proxy = 'http://192.168.0.105:3128'
