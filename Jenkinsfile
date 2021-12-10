@@ -63,7 +63,6 @@ pipeline {
     stage('archive') {
       steps {
         archiveArtifacts(artifacts: 'build_result/*', fingerprint: true)
-        disableConcurrentBuilds()
       }
     }
     
@@ -76,5 +75,6 @@ pipeline {
   }
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
+    disableConcurrentBuilds()
   }
 }
