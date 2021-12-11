@@ -7,20 +7,6 @@ pipeline {
 
   }
   stages {
-    stage('clean') {
-      agent {
-        node {
-          label 'compile_server'
-        }
-
-      }
-      steps {
-        sh 'ls /root'
-        sh 'rm -rf /root/lineage/out/*'
-        sh '/usr/sbin/fstrim -a -v'
-      }
-    }
-
     stage('fetch') {
       steps {
         lock(resource: 'lineage-source') {
