@@ -50,7 +50,7 @@ pipeline {
     http_proxy = 'http://192.168.0.105:3128'
     https_proxy = 'http://192.168.0.105:3128'
     BUILD_KEY_FILE = credentials('d25cb702-701b-40b3-9b1d-e8ec716c61f4')
-    BUILD_TARGET = 'lineage_vangogh-user'
+    BUILD_TARGET = 'lineage_vangogh-eng'
   }
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
