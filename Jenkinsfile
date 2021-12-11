@@ -30,21 +30,12 @@ pipeline {
         lock(resource: 'lineage-source') {
           lock(resource: 'lineage-out') {
             sh 'rm -rf /code/out/*'
-            sh 'bash -c \'cd /code && . build/envsetup.sh;breakfast $BUILD_TARGET &&  mka target-files-package otatools\''
+            sh 'bash -c \'cd /code && . build/envsetup.sh;breakfast $BUILD_TARGET &&  mka recoveryimage\''
           }
 
         }
 
-      }
-    }
-
-    stage('sign') {
-      steps {
-        lock(resource: 'lineage-out', quantity: 1) {
-          sh 'cd /code && bash -c \'. build/envsetup.sh && breakfast $BUILD_TARGET &&  croot && python2 /code/out/host/linux-x86/bin/sign_target_files_apks -v -o -d /tmp/android-certs /code/out/target/product/*/obj/PACKAGING/target_files_intermediates/*-target_files-*.zip /tmp/signed-target_files.zip\''
-        }
-
-        sh ' cd /code && bash -c \'. build/envsetup.sh && breakfast $BUILD_TARGET && python2 /code/out/host/linux-x86/bin/ota_from_target_files -v -k /tmp/android-certs/releasekey --block --backup=true /tmp/signed-target_files.zip $WORKSPACE/build_result/signed-ota_update-`date "+%Y%m%d"`.zip\''
+        sh 'cp /code/out/target/product/*/recovery.img $WORKSPACE/build_result/'
       }
     }
 
