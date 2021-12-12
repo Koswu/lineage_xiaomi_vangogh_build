@@ -30,7 +30,7 @@ pipeline {
         lock(resource: 'lineage-source') {
           lock(resource: 'lineage-out') {
             sh 'rm -rf /code/out/*'
-            sh 'bash -c \'cd /code && . build/envsetup.sh;breakfast $BUILD_TARGET &&  mka bacon recoveryimage\''
+            sh 'bash -c \'cd /code && . build/envsetup.sh;breakfast $BUILD_TARGET &&  mm recoveryimage\''
           }
 
         }
