@@ -30,6 +30,7 @@ pipeline {
       steps {
         lock(resource: 'lineage-source') {
           lock(resource: 'lineage-out') {
+            sh 'rm /usr/bin/python && ln /usr/bin/python2 /usr/bin/python'
             sh 'rm -rf /code/out/*'
             sh 'bash -c \'cd /code && . build/envsetup.sh;breakfast $BUILD_TARGET &&  mka recoveryimage\''
           }
