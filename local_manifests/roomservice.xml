@@ -6,9 +6,9 @@
   <remote fetch="https://gitlab.com/xSylla/" name="xSylla-gitlab" />
   <remote fetch="https://github.com/TeamWin/" name="TeamWin-github" />
   <!--<remove-project name="LineageOS/android_bootable_recovery" />-->
-  <project path="bootable/recovery/recovery-twrp" name="android_bootable_recovery" remote="TeamWin-github" revision="android-11" group="pdk"/>
-  <project path="device/xiaomi/vangogh" name="android_device_xiaomi_vangogh" remote="KosWu-github" revision="lineage-18.1-twrp" />
-  <project path="device/xiaomi/sm7250-common" name="android_device_xiaomi_sm7250-common"  remote="KosWu-github" revision="lineage-18.1-twrp" />
+  <!--<project path="bootable/recovery/recovery-twrp" name="android_bootable_recovery" remote="TeamWin-github" revision="android-11" group="pdk"/>-->
+  <project path="device/xiaomi/vangogh" name="android_device_xiaomi_vangogh" remote="KosWu-github" revision="twrp-11" />
+  <!--<project path="device/xiaomi/sm7250-common" name="android_device_xiaomi_sm7250-common"  remote="KosWu-github" revision="lineage-18.1-twrp" />-->
   <project path="vendor/xiaomi" name="android-vendor-xiaomi-sm7250" remote="xSylla-gitlab" revision="master" />
   <project path="kernel/xiaomi/sm7250" name="android_kernel_xiaomi_sm7250" remote="xiaomi-sm7250-github" revision="picasso-r-oss"/>
   <project path="hardware/xiaomi" name="android_hardware_xiaomi" remote="LineageOS-github" revision="lineage-18.1" />
