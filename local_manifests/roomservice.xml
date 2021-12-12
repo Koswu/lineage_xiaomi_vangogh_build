@@ -6,7 +6,7 @@
   <remote fetch="https://gitlab.com/xSylla/" name="xSylla-gitlab" />
   <remote fetch="https://github.com/TeamWin/" name="TeamWin-github" />
   <remove-project name="LineageOS/android_bootable_recovery" />
-  <project path="bootable/recovery" name="android_bootable_recovery" remote="TeamWin-github" revision="android-11" group="pdk"/>
+  <project path="bootable/recovery/recovery-twrp" name="android_bootable_recovery" remote="TeamWin-github" revision="android-11" group="pdk"/>
   <project path="device/xiaomi/vangogh" name="android_device_xiaomi_vangogh" remote="KosWu-github" revision="lineage-18.1-twrp" />
   <project path="device/xiaomi/sm7250-common" name="android_device_xiaomi_sm7250-common"  remote="KosWu-github" revision="lineage-18.1-twrp" />
   <project path="vendor/xiaomi" name="android-vendor-xiaomi-sm7250" remote="xSylla-gitlab" revision="master" />
