@@ -2,7 +2,7 @@ pipeline {
   agent {
     docker {
       image 'koswu/aosp-buildenv'
-      args '-v $HOME/lineage:/code -v $HOME/ccache:/cache'
+      args '-v $HOME/twrp:/code -v $HOME/ccache:/cache'
     }
 
   }
@@ -11,7 +11,9 @@ pipeline {
       steps {
         lock(resource: 'lineage-source') {
           retry(count: 3) {
-            sh 'cp -r local_manifests /code/.repo/ && cd /code && repo init --depth=1 -u git://github.com/LineageOS/android.git -b lineage-18.1'
+            sh '''cp -r local_manifests /code/.repo/ && cd /code && repo init --depth=1 -u git://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-11
+
+'''
             sh 'cd /code && repo sync -j 12 -c --force-sync'
           }
 
@@ -30,7 +32,7 @@ pipeline {
         lock(resource: 'lineage-source') {
           lock(resource: 'lineage-out') {
             sh 'rm -rf /code/out/*'
-            sh 'bash -c \'cd /code && . build/envsetup.sh;breakfast $BUILD_TARGET &&  mm recoveryimage\''
+            sh 'bash -c \'cd /code && . build/envsetup.sh;breakfast $BUILD_TARGET &&  mka recoveryimage\''
           }
 
         }
@@ -50,7 +52,8 @@ pipeline {
     http_proxy = 'http://192.168.0.105:3128'
     https_proxy = 'http://192.168.0.105:3128'
     BUILD_KEY_FILE = credentials('d25cb702-701b-40b3-9b1d-e8ec716c61f4')
-    BUILD_TARGET = 'lineage_vangogh-eng'
+    BUILD_TARGET = 'twrp_vangogh-eng'
+    ALLOW_MISSING_DEPENDENCIES = 'true'
   }
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
