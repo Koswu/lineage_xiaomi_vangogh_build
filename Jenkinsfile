@@ -9,6 +9,7 @@ pipeline {
   stages {
     stage('fetch') {
       steps {
+        sh 'echo "check proxy... http_proxy = $http_proxy, https_proxy = $https_proxy"'
         lock(resource: 'lineage-source') {
           retry(count: 3) {
             sh '''cp -r local_manifests /code/.repo/ && cd /code && repo init --depth=1 -u git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-9.0
